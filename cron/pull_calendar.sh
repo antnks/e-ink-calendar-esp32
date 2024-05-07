@@ -16,21 +16,21 @@ SCRIPT=`realpath $0`
 DIR=`dirname $SCRIPT`
 
 # if env does not override, use the script's dir
-if [ -z "$BASEDIR" ]
+if [ -z "$BASE_DIR" ]
 then
-	log_info "BASEDIR not defined, setting to $DIR"
-	BASEDIR=$DIR
+	log_info "BASE_DIR not defined, setting to $DIR"
+	BASE_DIR=$DIR
 fi
 
 # file locations
-ICAL_SAVE="$BASEDIR/ical.txt"
-HTML_TEMPLATE="$BASEDIR/template.shtml"
-HTML_RENDER="$BASEDIR/render.html"
-PNG_SAVE="$BASEDIR/ical-raw.png"
-PNG_CROP="$BASEDIR/ical-crop.png"
-PNG_BRW="$BASEDIR/ical.png"
-PBM_B_TEMP="$BASEDIR/ical.b.pbm"
-PBM_R_TEMP="$BASEDIR/ical.r.pbm"
+ICAL_SAVE="$BASE_DIR/ical.txt"
+HTML_TEMPLATE="$BASE_DIR/template.shtml"
+HTML_RENDER="$BASE_DIR/render.html"
+PNG_SAVE="$BASE_DIR/ical-raw.png"
+PNG_CROP="$BASE_DIR/ical-crop.png"
+PNG_BRW="$BASE_DIR/ical.png"
+PBM_B_TEMP="$BASE_DIR/ical.b.pbm"
+PBM_R_TEMP="$BASE_DIR/ical.r.pbm"
 #ICAL_SECRET_URL="https://calendar.google.com/calendar/ical/xxx%40group.calendar.google.com/private-xxx/basic.ics"
 #EID_IP="192.168.1.1"
 #EID_PORT="80"
@@ -51,7 +51,7 @@ then
 fi
 
 log_info "parse and save only requsted month and the next one"
-python3 "$BASEDIR/process_month.py" "$ICAL_SAVE" "$HTML_TEMPLATE" "$HTML_RENDER" $1
+python3 "$BASE_DIR/process_month.py" "$ICAL_SAVE" "$HTML_TEMPLATE" "$HTML_RENDER" $1
 if [ $? != 0 ]
 then
 	log_error "python code failed"
@@ -77,7 +77,7 @@ then
 fi
 
 log_info "converting to black-red-white"
-python3 "$BASEDIR/convert-brw.py" "$PNG_CROP" "$PNG_BRW"
+python3 "$BASE_DIR/convert-brw.py" "$PNG_CROP" "$PNG_BRW"
 
 log_info "extract black channel to $PBM_B_TEMP"
 convert "$PNG_BRW" -negate "$PBM_B_TEMP"

@@ -8,11 +8,11 @@ COPY process_month.py /app/
 COPY pull_calendar.sh /app/
 COPY template.shtml   /app/
 
-ARG BASEDIR=/app
+ARG BASE_DIR=/app
 ARG ICAL_SECRET_URL="https://calendar.google.com/calendar/ical/xxx%40group.calendar.google.com/private-xxx/basic.ics"
 ARG EID_IP="192.168.1.1"
 ARG EID_PORT="80"
-ENV BASEDIR=$BASEDIR
+ENV BASE_DIR=$BASE_DIR
 ENV ICAL_SECRET_URL=$ICAL_SECRET_URL
 ENV EID_IP=$EID_IP
 ENV EID_PORT=$EID_PORT
