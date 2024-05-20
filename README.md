@@ -1,6 +1,10 @@
 # e-ink-calendar-esp32
 E-ink calendar based on ESP32 and Waveshare 1304×984 12.48 inch 3-color display
 
+# UPDATE 2024-05
+
+Turned out, Waveshare displays are shit 💩, after about 4 months of using, the red color became light-pink and can barely seen at all. I don't recommend building this project until I upgrade it something more reliable.
+
 # Photos
 
 A real wall-mounted e-ink calendar from my kitchen:
