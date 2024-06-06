@@ -11,6 +11,8 @@ log_info ()
 	logger "$0: $1"
 }
 
+FIREFOX="firefox"
+
 # get script's dir
 SCRIPT=`realpath $0`
 DIR=`dirname $SCRIPT`
@@ -59,7 +61,7 @@ then
 fi
 
 log_info "detect firefox"
-firefox --version > /dev/null
+$FIREFOX --version > /dev/null
 if [ $? != 0 ]
 then
 	log_error "Unable to run headless firefox"
@@ -67,7 +69,7 @@ then
 fi
 
 log_info "run firefox to make screenshot only"
-firefox --headless --screenshot "$PNG_SAVE" "file://$HTML_RENDER" 1> /dev/null 2> /dev/null
+$FIREFOX --headless --screenshot "$PNG_SAVE" "file://$HTML_RENDER" 1> /dev/null 2> /dev/null
 log_info "crop area that fits our screen"
 convert "$PNG_SAVE" -crop 1304x984+12+4 "$PNG_CROP"
 if [ $? != 0 ]
