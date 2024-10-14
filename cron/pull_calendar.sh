@@ -71,7 +71,7 @@ fi
 log_info "run firefox to make screenshot only"
 $FIREFOX --headless --screenshot "$PNG_SAVE" "file://$HTML_RENDER" 1> /dev/null 2> /dev/null
 log_info "crop area that fits our screen"
-convert "$PNG_SAVE" -crop 1304x984+12+4 "$PNG_CROP"
+convert "$PNG_SAVE" -crop 1304x984+12+4 "PNG32:$PNG_CROP"
 if [ $? != 0 ]
 then
 	log_error "Unable to crop PNG"
