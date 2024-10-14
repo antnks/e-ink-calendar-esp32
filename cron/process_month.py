@@ -112,10 +112,12 @@ row = '''\
 </span>
 </td>'''
 
-# loop 14 days
+# loop 14 days, leap day breaks date calculation
+# https://github.com/antnks/e-ink-calendar-esp32/issues/5
+day_counter=0
 dayrow=""
 loop_day = start_date
-while loop_day <= end_date:
+while day_counter < 14:
 	color="black"
 	decor="none"
 
