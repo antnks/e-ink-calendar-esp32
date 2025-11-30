@@ -7,6 +7,8 @@ import pytz
 import locale
 import sys
 
+BWONLY=True
+
 def append_event(idx, dt, ev):
 	global month
 	if idx not in month:
@@ -82,14 +84,14 @@ allday=""
 timeday=""
 color="black"
 
-if today.weekday() >= 5:
+if today.weekday() >= 5 and not BWONLY:
 	color="red"
 if dic_idx in month:
 	for event in month[dic_idx]:
 		summary = event[1]
 		##print(summary)
 		# convention, if an event starts with an asterisk - it is public holiday
-		if summary[0] == '*':
+		if summary[0] == '*' and not BWONLY:
 			color="red"
 			summary=summary[2:]
 		if event[0]:
@@ -105,7 +107,7 @@ template = template.replace("${COLOR}", color)
 row = '''\
 <td style="width: 14%; vertical-align: top">
 <span style="font-size: 50px; color: {color}; text-decoration-style: wavy; {decor};">
-<strong>{curday}</strong><br></span><br>
+<strong>{surround}{curday}{surround}</strong><br></span><br>
 <span style="font-size: 20px; color: {color};">
 <strong>{allday}</strong>
 {timeday}
@@ -120,11 +122,13 @@ loop_day = start_date
 while day_counter < 14:
 	color="black"
 	decor="none"
+	surround_curday=""
 
 	# TODO also detect public holiday
-	if loop_day.weekday() >= 5:
+	if loop_day.weekday() >= 5 and not BWONLY:
 		color="red"
 	if loop_day.day == current_day:
+		surround_curday="•"
 		decor="display: inline-block; height: 70px; background: #bbbbbb"
 
 	dic_idx = date_idx(loop_day)
@@ -136,7 +140,7 @@ while day_counter < 14:
 			##print(summary)
 
 			# convention, if an event starts with an asterisk - it is public holiday
-			if summary[0] == '*':
+			if summary[0] == '*' and not BWONLY:
 				color="red"
 				summary=summary[2:]
 			# if event[0] is None - it is a full day event
@@ -149,9 +153,10 @@ while day_counter < 14:
 
 	if loop_day == start_date + relativedelta(weeks=1):
 		dayrow+="\n</tr>\n<tr>"
-	dayrow+=row.format(color=color, decor=decor, allday=allday, timeday=timeday, curday=loop_day.day)+"\n"
+	dayrow+=row.format(color=color, decor=decor, allday=allday, timeday=timeday, curday=loop_day.day, surround=surround_curday)+"\n"
 
 	loop_day += relativedelta(days=1)
+	day_counter += 1
 
 template = template.replace("${DAY_ROW}", dayrow)
 
